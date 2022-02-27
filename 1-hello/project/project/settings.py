@@ -24,13 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-zbx996k=gv@zsjjs@ik)yislz&+uzp3y$(t0o50jh+ds5af-hv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1',
                 'localhost',
                 'jurutera.io',
                 'www.jurutera.io',
-                'luqmaans.pythonanywere.com',]
+                'luqmaans.pythonanywhere.com',]
 
 
 # Application definition
