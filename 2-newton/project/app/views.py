@@ -9,7 +9,7 @@ def newton(request):
         context = {'mass': mass, 'accel': accel, 'force': force}
         
 
-    # Form generating
+    # Form generating 
     else:
         context = {}
     
