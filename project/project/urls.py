@@ -18,9 +18,13 @@ from django.urls import path
 from app import views as appViews
 
 urlpatterns = [
+    
+    path('', appViews.newton_ajax, name='home'),
+
     path('admin/', admin.site.urls),
-    path('', appViews.newton_js, name='home'),
     path('app/1-hello', appViews.hello, name='1-hello'),
     path('app/2-newton', appViews.newton, name='2-newton'),
     path('app/3-newton-js', appViews.newton_js, name='3-newton-js'),
+    path('app/4-newton-ajax', appViews.newton_ajax, name='4-newton-ajax'),
+    
 ]

@@ -1,4 +1,21 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from time import sleep
+
+
+def newton_ajax(request):
+
+    if request.GET.get('mass') or request.GET.get('accel'):
+        mass = float(request.GET.get('mass'))
+        accel = float(request.GET.get('accel'))
+        force = round(mass*accel,2)
+
+        sleep(1.5)
+
+        return JsonResponse({'force' : force}, status=200)
+
+    return render(request, 'app/4-newton-ajax.html')
+
 
 
 def newton_js(request):

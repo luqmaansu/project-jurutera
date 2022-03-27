@@ -1,0 +1,52 @@
+{% extends "app/_base.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Newton's 2nd Law Calculator</h1>
+<h3 class="mb-5 text-muted">AJAX Edition</h3>
+
+<form method="POST" class="g-3" id="form">
+    {% csrf_token %}
+
+    <!-- Mass input -->
+    <div class="col-lg-4">
+        <label for="mass" class="form-label">Mass, m</label>
+        <div class="input-group">
+            <input class="form-control" type="number" step="0.01" min="0" id="mass"
+                required>
+            <span class="input-group-text">kg</span>
+        </div>
+    </div>
+
+    <!-- Acceleration input -->
+    <div class="col-lg-4">
+        <label for="accel" class="form-label">Acceleration, a</label>
+        <div class="input-group">
+            <input class="form-control" type="number" step="0.01" min="0" id="accel"
+                required>
+            <span class="input-group-text">m/s&sup2;</span>
+        </div>
+    </div>
+
+    <!-- Calculate process -->
+    <div class="col-lg-4 mt-3">
+        <button class="btn btn-primary d-block" id="calculate" type="submit" name="calculate">
+            <span class="spinner-grow spinner-grow-sm" id="loader" style="display: none;"></span>
+            <span id="calculate_txt">Calculate</span>
+        </button>
+    </div>
+
+    <!-- Force output -->
+    <div class="col-lg-4 mt-3">
+        <label for="force" class="form-label">Force, F = m &times; a</label>
+        <div class="input-group">
+            <input class="form-control" value="{{ force }}" id="force" name="force" disabled>
+            <span class="input-group-text">N</span>
+        </div>
+    </div>
+
+</form>
+
+<script src="{% static 'app/4-newton-ajax.js' %}"></script>
+
+{% endblock content %}
