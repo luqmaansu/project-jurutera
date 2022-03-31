@@ -1,0 +1,71 @@
+{% extends "app/_base.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Vibration Absorber Designer</h1>
+<h3 class="mb-5 text-muted"></h3>
+
+<div class="row">
+    <div class="col-md-6 mt-3 order-md-2">
+        <figure class="figure">
+            <img class="figure-img img-fluid" src="{% static 'app/5-vad.png' %}" alt="">
+            <figcaption class="figure-caption">
+                <b>Figure:</b> Illustration of a vibration absorber with the parameters involved.
+            </figcaption>
+        </figure>
+    </div>
+    <div class="col-md-6 mt-3 order-md-1">
+        <form method="POST" class="g-3" id="form">
+            {% csrf_token %}
+
+            <!-- Inputs -->
+            <div class="row g-2">
+                {% for key, val in inputs.items %}
+                <div class="col-lg-6">
+                    <div class="form-floating">
+                        <input class="form-control input-field" type="number" min=0 step="any" id="{{ key }}" name="{{ key }}" value="{{ val.value }}" required>
+                        <label for="{{ key }}">{{ key|capfirst }}, {{ val.sym }} ({{ val.unit }})</label>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Output -->
+                <div class="col-lg-6">
+                    <div class="form-floating mb-2">
+                        <input class="form-control" type="number" id="mass" value="{{ output }}" disabled>
+                        <label for="mass">Mass, m (lb)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions buttons -->
+            <div class="d-grid gap-2 d-md-flex mb-4">
+                <button class="btn btn-lg btn-primary" id="calculate" type="submit" name="calculate">
+                    Calculate
+                </button>
+                <button class="btn btn-lg btn-outline-secondary" type="button" id="sample">
+                    Sample
+                </button>
+                <div class="ms-md-auto d-grid">
+                    <button class="btn btn-lg btn-outline-danger" type="button" id="reset">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+            <small>Design reference:
+                <br>
+                <a href="https://www.maintenance.org/fileSendAction/fcType/0/fcOid/458854209381134028/filePointer/458854209383048564/fodoid/458854209383048560/DynamicAbsorber%20Explanation.pdf">
+                    Randy Fox (n.d.). Dynamic Absorbers for Solving Resonance Problems
+                </a>
+            </small>
+    </div>
+</div>
+
+</form>
+</div>
+</div>
+
+<script src="{% static 'app/5-vad.js' %}"></script>
+
+{% endblock content %}
