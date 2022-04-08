@@ -19,7 +19,7 @@ from app import views as appViews
 
 urlpatterns = [
     
-    path('', appViews.va_designer, name='home'),
+    path('', appViews.va_designer_pse, name='home'),
 
     path('admin/', admin.site.urls),
     path('app/1-hello', appViews.hello, name='1-hello'),
@@ -27,5 +27,6 @@ urlpatterns = [
     path('app/3-newton-js', appViews.newton_js, name='3-newton-js'),
     path('app/4-newton-ajax', appViews.newton_ajax, name='4-newton-ajax'),
     path('app/5-vad', appViews.va_designer, name='5-vad'),
+    path('app/6-vad-pse', appViews.va_designer_pse, name='6-vad-pse'),
     
 ]
