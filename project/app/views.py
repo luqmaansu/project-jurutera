@@ -4,6 +4,51 @@ from time import sleep
 import numpy as np
 import math
 
+def vdi(request):
+    
+    # AJAX processing
+    if request.method == 'POST':
+
+        # Get reading from AJAX
+        f = float(request.POST.get('f'))
+        v = float(request.POST.get('v'))
+
+        # Evaluate category of severity
+        v1 = 0.84 * f**0.5 # Design
+        v2 = 1.83 * f**0.5 # Marginal
+        v3 = 3.50 * f**0.5 # Correction
+        v4 = 9.00 * f**0.5 # Danger
+
+        # Danger
+        if v >= v4:
+            category = 'Danger'
+
+        # Correction
+        elif v >= v3:
+            category = 'Correction'
+
+        # Marginal
+        elif v >= v2:
+            category = 'Marginal'
+
+        # Design
+        elif v >= v1:
+            category = 'Design'
+
+        # N/A
+        else:
+            category = 'N/A'
+
+        context = {'category': category}
+
+        sleep(1.5)
+        return JsonResponse(context, status=200)
+
+    # Initialize page
+    else:
+        return render(request, 'app/7-vdi.html')
+
+
 def va_designer_pse(request):
 
     inputs = {
