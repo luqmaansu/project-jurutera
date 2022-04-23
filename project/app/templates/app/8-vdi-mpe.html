@@ -1,0 +1,94 @@
+{% extends "app/_base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<h1>VDI 3842 Vibration Chart Evaluator</h1>
+<h3 class="mb-3 text-muted">Multi-Point Edition</h3>
+
+<div class="row mt-4 mb-4">
+    <div class="col-lg-6 mt-3 order-md-2">
+        <canvas id="chart-vdi"></canvas>
+    </div>
+
+    <div class="col-lg-6 mt-3 order-md-1">
+        <form id="form-vdi">
+
+            <div class="d-flex justify-content-end gap-2 mt-2 mb-2">
+
+                <!-- Add Data button -->
+                <button class="btn btn-outline-primary" id="btn-add" type="button" onclick="btn_add()">
+                    <i class="bi bi-plus-lg"></i>
+                </button>
+
+                <!-- Remove button -->
+                <button class="btn btn-outline-danger" id="btn-remove" type="button" onclick="btn_remove()">
+                    <i class="bi bi-dash-lg"></i>
+                </button>
+
+            </div>
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Frequency</th>
+                        <th scope="col">Velocity</th>
+                        <th scope="col">Category</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr class="reading-data-default reading-data" id="reading-data-1">
+
+                        <!-- No. of reading -->
+                        <th scope="row">1</th>
+
+                        <!-- Frequency input -->
+                        <td>
+                            <input class="form-control form-data" type="number" step="0.01" min="1" max="300" name="input-frequency-1" placeholder="Hz" required>
+                        </td>
+
+                        <!-- Velocity input -->
+                        <td>
+                            <input class="form-control form-data" type="number" step="0.01" min="1" max="100" name="input-velocity-1" placeholder="mm/s RMS" required>
+                        </td>
+
+                        <!-- Category field -->
+                        <td>
+                            <input class="form-control form-category" id="input-category-1" disabled>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="gap-2 d-flex justify-content-end mt-4 mb-4">
+                <!-- Evaluate button -->
+                <button class="btn btn-primary" id="btn-evaluate" type="submit" onclick="btn_evaluate(event)">
+                    <span class="spinner-grow spinner-grow-sm" id="loader" style="display: none;"></span>
+                    <span id="evaluate_label">Evaluate</span>
+                </button>
+
+                <!-- Remove all button -->
+                <button class="btn btn-danger" id="btn-remove-all" type="button" onclick="btn_remove_all()">
+                    Remove All
+                </button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr>
+<small>
+    <b>Disclaimer:</b>
+    This evaluation does not necessarily represent the precise values used in VDI 3842 vibration standard. This web application is developed for education purposes only.
+</small>
+
+<script>
+    var csrftoken = '{{ csrf_token }}';
+</script>
+<script src="{% static 'app/8-vdi-mpe.js' %}"></script>
+
+{% endblock content %}

@@ -19,7 +19,7 @@ from app import views as appViews
 
 urlpatterns = [
     
-    path('', appViews.vdi, name='home'),
+    path('', appViews.vdi_mpe, name='home'),
     path('admin/', admin.site.urls),
     
     # URLs by episode
@@ -30,6 +30,7 @@ urlpatterns = [
 	path('5', appViews.va_designer, name='ep-5'),
 	path('6', appViews.va_designer_pse, name='ep-6'),
 	path('7', appViews.vdi, name='ep-7'),
+	path('8', appViews.vdi_mpe, name='ep-8'),
 
     # Old URL format
     path('app/1-hello', appViews.hello, name='1-hello'),

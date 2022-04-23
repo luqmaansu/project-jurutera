@@ -3,6 +3,62 @@ from django.http import JsonResponse
 from time import sleep
 import numpy as np
 import math
+import json
+
+
+def vdi_mpe(request):
+    # AJAX processing
+    if request.method == 'POST':
+
+        readings = json.loads(request.POST.get('readings'))
+
+        # note 1 row consist of 2 data in readings: frequency and velocity
+        row_no = int((len(readings)-1)/2)
+        
+        category = []
+        for n in range(1, row_no + 1):
+            print
+            # Get reading from readings
+            f = float(readings['input-frequency-' + str(n)])
+            v = float(readings['input-velocity-' + str(n)])
+            # f, v = 1, 1
+
+            # Evaluate category of severity
+            v1 = 0.84 * f**0.5 # Design
+            v2 = 1.83 * f**0.5 # Marginal
+            v3 = 3.50 * f**0.5 # Correction
+            v4 = 9.00 * f**0.5 # Danger
+
+            # Danger
+            if v >= v4:
+                this_category = 'Danger'
+
+            # Correction
+            elif v >= v3:
+                this_category = 'Correction'
+
+            # Marginal
+            elif v >= v2:
+                this_category = 'Marginal'
+
+            # Design
+            elif v >= v1:
+                this_category = 'Design'
+
+            # N/A
+            else:
+                this_category = 'N/A'
+
+            category.append(this_category)
+
+        context = {'category': category}
+        print(category)
+        return JsonResponse(context, status=200)
+
+    # Initialize page
+    else:
+        return render(request, 'app/8-vdi-mpe.html')
+
 
 def vdi(request):
     
