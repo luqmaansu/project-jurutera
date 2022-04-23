@@ -243,6 +243,15 @@ function evaluate() {
 
 // Helpers -------------------------------------
 
+// Converts form field inputs to JSON object
+function formToJson(nameForm) {
+    var jsonForm = {};
+    $("input", $(nameForm)).each(function (index) {
+        jsonForm[$(this).attr("name")] = this.value;
+    })
+    return jsonForm;
+}
+
 // Get the number of reading data rows in table
 function get_rows() {
     return $('.reading-data').length
@@ -262,15 +271,6 @@ function disable_remove() {
     } else {
         $("#btn-remove").removeAttr("disabled")
     }
-}
-
-// Converts form field inputs to JSON object
-function formToJson(nameForm) {
-    var jsonForm = {};
-    $("input", $(nameForm)).each(function (index) {
-        jsonForm[$(this).attr("name")] = this.value;
-    })
-    return jsonForm;
 }
 
 function remove_all_datasets(){
