@@ -58,12 +58,12 @@ function btn_remove(){
     disable_remove()
 }
 
-function btn_evaluate(e){
-
-    e.preventDefault() // prevent the form from actually being submitted
+// Using submit callback method, to prevent form submission
+// while still enforcing default HTML form validation
+$('#form-vdi').submit(function(e){
+    e.preventDefault()
     evaluate()
-
-}
+})
 
 function btn_remove_all(){
     $('.reading-data-added').remove()
