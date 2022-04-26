@@ -1,4 +1,6 @@
 // Color settings -------------------------------------
+// --> Defining standard colors used throughout this page
+
 const color_reading = 'rgba(13, 110, 253, 0.5)'
 const color_na = 'rgba(255, 255, 255, 0.35)'
 const color_grey = '#e9ecef'
@@ -7,7 +9,8 @@ const color_marginal = 'rgba(235, 235, 52, 0.5)'
 const color_correction = 'rgba(235, 155, 52, 0.5)'
 const color_danger = 'rgba(235, 52, 52, 0.4)'
 
-// Buttons -------------------------------------
+// Button functions -------------------------------------
+// --> Defining functions to be executed when pressing buttons
 
 function btn_add(){
     // get the outer HTML of default reading-data
@@ -76,6 +79,7 @@ function btn_remove_all(){
 
 
 // Chart generation -------------------------------------
+// --> Process of initializing the structure of the chart and plotting it
 
 // Data
 const data = {
@@ -199,6 +203,7 @@ const chart = new Chart(context, config);
 
 
 // AJAX function -------------------------------------
+// --> To communicate with the back-end
 
 // Evaluate
 function evaluate() {
@@ -242,6 +247,8 @@ function evaluate() {
 }
 
 // Helpers -------------------------------------
+// --> defining functions used throughout the script
+
 
 // Converts form field inputs to JSON object
 function formToJson(nameForm) {
@@ -334,7 +341,6 @@ function updateData(readings, i) {
     return
 }
 
-
 function loading_state() {
 
     // disable input fields
@@ -396,6 +402,8 @@ function set_category(response, i) {
 
 
 // Initializers -------------------------------------
+// --> Functions to run when initializing the page
+
 disable_remove() // checks if need to disable remove button
 reset_state() // initialize page with reset state
-btn_remove_all()
+btn_remove_all() // clear data from previous input
