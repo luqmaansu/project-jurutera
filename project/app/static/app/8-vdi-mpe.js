@@ -246,9 +246,10 @@ function evaluate() {
     })
 }
 
-// Helpers -------------------------------------
-// --> defining functions used throughout the script
 
+
+// Helpers -------------------------------------
+// --> Defining functions used throughout the script
 
 // Converts form field inputs to JSON object
 function formToJson(nameForm) {
@@ -399,6 +400,7 @@ function set_category(response, i) {
     $("#input-category-" + n).attr('style', 'background-color:' + color)
 
 }
+
 
 
 // Initializers -------------------------------------
