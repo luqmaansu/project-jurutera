@@ -19,7 +19,7 @@ from app import views as appViews
 
 urlpatterns = [
     
-    path('', appViews.vdi_mpe, name='home'),
+    path('', appViews.charts, name='home'),
     path('admin/', admin.site.urls),
     
     # URLs by episode
