@@ -31,6 +31,7 @@ urlpatterns = [
 	path('6', appViews.va_designer_pse, name='ep-6'),
 	path('7', appViews.vdi, name='ep-7'),
 	path('8', appViews.vdi_mpe, name='ep-8'),
+	path('9', appViews.charts, name='ep-9'),
 
     # Old URL format
     path('app/1-hello', appViews.hello, name='1-hello'),

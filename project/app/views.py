@@ -5,6 +5,20 @@ import numpy as np
 import math
 import json
 
+import random
+def charts(request):
+
+    # Generate page template normally if not requested via AJAX
+    if request.headers.get('X-Requested-With') != 'XMLHttpRequest':
+        return render(request, 'app/9-chart.html')
+
+    # Process AJAX request
+    elif request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        # Generate random value
+        value = round(random.uniform(0, 20), 2)
+        context = {'value': value}
+        return JsonResponse(context, status=200)
+
 
 def vdi_mpe(request):
     # AJAX processing

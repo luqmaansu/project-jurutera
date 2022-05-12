@@ -1,0 +1,45 @@
+{% extends "app/_base.html" %}
+{% load static %}
+{% block content %}
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Page title -->
+<h1>Charts</h1>
+
+<div class="row mt-5 mb-2">
+
+    <!-- chart-1 -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                Chart 1
+            </div>
+            <div class="card-body">
+                <canvas id="chart-1"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- chart-2 -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                Chart 2
+            </div>
+            <div class="card-body">
+                <canvas id="chart-2"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<button class="btn btn-primary" onclick="update1()">Get Data</button>
+
+<!-- Scripts for this episode -->
+<!-- Put at the bottom to ensure DOM is fully loaded first -->
+<script src="{% static 'app/9-chart.js' %}"></script>
+
+{% endblock content %}
