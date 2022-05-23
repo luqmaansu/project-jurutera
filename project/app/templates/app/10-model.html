@@ -1,0 +1,36 @@
+{% extends "app/_base.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Hello Cube</h1>
+<div class="card">
+    <div class="card-body">
+        <canvas id="c"></canvas>
+    </div>
+</div>
+<button id="btn-reset" class="btn btn-outline-secondary">Reset</button>
+<button id="btn-side" class="btn btn-outline-secondary">Side</button>
+<button id="btn-back" class="btn btn-outline-secondary">Back</button>
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- GSAP animation library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+
+<!-- Main js script -->
+<script type="module" src="{% static 'app/10-model.js' %}"></script>
+
+<style>
+    #c {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .card {
+        margin-bottom: 10px;
+    }
+</style>
+
+{% endblock content %}

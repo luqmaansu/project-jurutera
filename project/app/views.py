@@ -5,6 +5,11 @@ import numpy as np
 import math
 import json
 
+
+def model(request):
+    return render(request, 'app/10-model.html')
+
+
 import random
 def charts(request):
 
