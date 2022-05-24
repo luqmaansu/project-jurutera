@@ -41,8 +41,13 @@ manager.onStart = function (url, itemsLoaded, itemsTotal) {
 
 manager.onLoad = function () {
     // Fade out using CSS class properties
-    $('#loading-screen').addClass('fade-out').remove()
+    let loadingScreen = $('#loading-screen')
+    loadingScreen.addClass('fade-out')
     console.log('Loading complete!');
+    setTimeout(
+        function () {
+            loadingScreen.remove()
+        }, 1000);
 };
 
 manager.onProgress = function (url, itemsLoaded, itemsTotal) {
