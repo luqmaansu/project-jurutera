@@ -14,6 +14,8 @@ import {
 //     RGBELoader
 // } from "./RGBELoader.js"
 
+// ------ Global variables
+let model, gridHelper
 
 // ------ Renderer
 const canvas = document.querySelector('#c');
@@ -58,12 +60,12 @@ manager.onError = function (url) {
     console.log('There was an error loading ' + url);
 };
 
-// ------ Load model
+// ------ Load GLTF model
 const loader = new GLTFLoader(manager)
 
 loader.setPath('static/app/10-model/');
-loader.load('scene.glb', function (gltf) {
-    const model = gltf.scene;
+loader.load('scene.gltf', function (gltf) {
+    model = gltf.scene;
 
     // Get model dimensions for outline cube and grid translation
     let bbox = new THREE.Box3().setFromObject(model);
@@ -79,7 +81,7 @@ loader.load('scene.glb', function (gltf) {
     // ------ Grid
     const size = 10;
     const divisions = 20;
-    const gridHelper = new THREE.GridHelper(size, divisions);
+    gridHelper = new THREE.GridHelper(size, divisions);
     gridHelper.position.y = -modelSize.y / 2
     scene.add(gridHelper);
 
@@ -93,7 +95,7 @@ controls.enableDamping = true;
 controls.dampingFactor = 0.25;
 controls.enablePan = false;
 
-{ // Lighting
+{ // ------ Lighting
     const lightAmbient = new THREE.AmbientLight(0xdedede)
     lightAmbient.intensity = 7.5
 
@@ -105,13 +107,7 @@ controls.enablePan = false;
     scene.add(lightAmbient, light);
 }
 
-// Cube parameters
-const boxWidth = 1;
-const boxHeight = 1;
-const boxDepth = 1;
-const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-// Resize render if canvas size not as displayed
+// ------ Resize render if canvas size not as displayed
 function resizeRendererToDisplaySize(renderer) {
     const canvas = renderer.domElement;
     const width = canvas.clientWidth;
@@ -124,7 +120,6 @@ function resizeRendererToDisplaySize(renderer) {
 }
 
 function render(time) {
-    time *= 0.001; // convert time to seconds
 
     // Responsive + scaling
     if (resizeRendererToDisplaySize(renderer)) {
@@ -133,40 +128,41 @@ function render(time) {
         camera.updateProjectionMatrix();
     }
 
-    // cubes.forEach((cube, i) => {
-    //     //const speed = .1 + i * .1;
-    //     const speed = 0.1
-    //     const rot = time * speed;
-    //     cube.rotation.x = rot;
-    //     cube.rotation.y = rot;
-    // });
-
     renderer.render(scene, camera);
     requestAnimationFrame(render);
+
 }
+
+// ------ Action buttons
 
 $('#btn-reset').on('click', function () {
     position_default(camera, controls)
 })
 
 $('#btn-side').on('click', function () {
+    controls.autoRotate = false
+    model.rotation.y = 0
     gsap.to(controls.object.position, {
         duration: 1,
-        x: 2.5,
+        x: 3,
         y: 0,
         z: 0,
     });
 })
 
 $('#btn-back').on('click', function () {
+    controls.autoRotate = false
+    model.rotation.y = 0
     gsap.to(camera.position, {
         duration: 1,
+        ease: "power4.out",
         x: 0,
         y: 0,
-        z: -2.5,
+        z: -3,
     });
     gsap.to(camera.rotation, {
         duration: 1,
+        ease: "power4.out",
         x: 2.5,
         y: 0,
         z: 0,
@@ -179,24 +175,24 @@ $('#btn-checkCam').on('click', function () {
     console.log('camera.rotation:', camera.rotation);
 })
 
-function animate(time) {
-    renderer.render(scene, camera)
-    TWEEN.update(time)
-    requestAnimationFrame(animate)
-    controls.update()
-
-}
-
 function position_default(camera) {
+    controls.autoRotate = true
+    controls.autoRotateSpeed = -1.62
     gsap.to(camera.position, {
         duration: 2,
+        ease: "power4.out",
         x: -1.8,
         y: 0.26,
         z: 2.2,
     });
 }
 
+function animate() {
+    renderer.render(scene, camera)
+    requestAnimationFrame(animate)
+    controls.update()
+}
+
 // ------ Initializations
 position_default(camera, controls) // set the camera & controls to the default position
-requestAnimationFrame(render);
 animate()

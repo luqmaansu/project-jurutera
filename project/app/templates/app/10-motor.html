@@ -7,7 +7,7 @@
 
 <!-- Canvas card -->
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="card">
       <section id="loading-screen">
         <div id="loader"></div>
@@ -18,14 +18,26 @@
 </div>
 
 <!-- Action buttons -->
-<button id="btn-reset" class="btn btn-outline-secondary">Reset</button>
-<button id="btn-side" class="btn btn-outline-secondary">Side</button>
-<button id="btn-back" class="btn btn-outline-secondary">Back</button>
+<div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+  
+  <!-- Reset -->
+  <input type="radio" class="btn-check" name="btnradio" id="btn-reset" class="btn btn-outline-secondary" checked>
+  <label class="btn btn-outline-primary" for="btn-reset">Default</label>
+
+  <!-- Side -->
+  <input type="radio" class="btn-check" name="btnradio" id="btn-side" class="btn btn-outline-secondary" autocomplete="off">
+  <label class="btn btn-outline-primary" for="btn-side">Side</label>
+
+  <!-- Back -->
+  <input type="radio" class="btn-check" name="btnradio" id="btn-back" class="btn btn-outline-secondary" autocomplete="off">
+  <label class="btn btn-outline-primary" for="btn-back">Back</label>
+
+</div>
 
 <!-- Model source -->
 <div class="row mt-4">
   <small class="text-muted">
-    Model by takeboncog via <a href="https://skfb.ly/6TJzp">Sketchfab</a>
+    Model by <i>takeboncog</i> via <a href="https://skfb.ly/6TJzp">Sketchfab</a>
   </small>
 </div>
 
