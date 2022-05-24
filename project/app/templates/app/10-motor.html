@@ -2,15 +2,30 @@
 {% load static %}
 {% block content %}
 
-<h1>Hello Cube</h1>
+<!-- Page title -->
+<h1>Hello Motor</h1>
+
+<!-- Canvas card -->
 <div class="card">
-    <div class="card-body">
-        <canvas id="c"></canvas>
-    </div>
+  <div class="card-body">
+    <canvas id="c"></canvas>
+    <section id="loading-screen">
+      <div id="loader"></div>
+    </section>
+  </div>
 </div>
+
+<!-- Action buttons -->
 <button id="btn-reset" class="btn btn-outline-secondary">Reset</button>
 <button id="btn-side" class="btn btn-outline-secondary">Side</button>
 <button id="btn-back" class="btn btn-outline-secondary">Back</button>
+
+<!-- Model source -->
+<div class="row mt-4">
+  <small class="text-muted">
+    Model by takeboncog via <a href="https://skfb.ly/6TJzp">Sketchfab</a>
+  </small>
+</div>
 
 <!-- Chart.js library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -19,18 +34,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
 
 <!-- Main js script -->
-<script type="module" src="{% static 'app/10-model.js' %}"></script>
+<script type="module" src="{% static 'app/10-motor.js' %}"></script>
 
-<style>
-    #c {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-
-    .card {
-        margin-bottom: 10px;
-    }
-</style>
+<!-- Custom styles -->
+<link rel="stylesheet" href="{% static 'app/10-motor.css' %}">
 
 {% endblock content %}

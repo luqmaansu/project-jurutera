@@ -19,6 +19,7 @@ import {
 const canvas = document.querySelector('#c');
 const renderer = new THREE.WebGLRenderer({
     canvas,
+    antialias: true,
 });
 
 // ------ Camera
@@ -32,30 +33,60 @@ const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xAAAAAA);
 
-const loader = new GLTFLoader().setPath('static/app/10-model/');
-console.log(loader)
+// ------ Loading manager
+const manager = new THREE.LoadingManager();
+manager.onStart = function (url, itemsLoaded, itemsTotal) {
+    console.log('Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+};
 
+manager.onLoad = function () {
+    // Fade out using CSS class properties
+    $('#loading-screen').addClass('fade-out')
+    console.log('Loading complete!');
+};
+
+manager.onProgress = function (url, itemsLoaded, itemsTotal) {
+    console.log('Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.');
+};
+
+manager.onError = function (url) {
+    console.log('There was an error loading ' + url);
+};
+
+// ------ Load model
+const loader = new GLTFLoader(manager)
+
+loader.setPath('static/app/10-model/');
 loader.load('scene.glb', function (gltf) {
-    scene.add(gltf.scene);
+    const model = gltf.scene;
+
+    // Get model dimensions for outline cube and grid translation
+    let bbox = new THREE.Box3().setFromObject(model);
+    let modelSize = bbox.getSize(new THREE.Vector3());
+
+    // Model outline cube
+    let helper = new THREE.Box3Helper(bbox, new THREE.Color(0, 255, 0));
+    // scene.add(helper);
+
+    scene.add(model);
     render();
+
+    // ------ Grid
+    const size = 10;
+    const divisions = 20;
+    const gridHelper = new THREE.GridHelper(size, divisions);
+    gridHelper.position.y = -modelSize.y / 2
+    scene.add(gridHelper);
 
 }, undefined, function (error) {
     console.error(error);
 });
-
 
 // ------ Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor = 0.25;
 controls.enablePan = false;
-
-// Check current camera position
-controls.addEventListener("change", event => {
-    // console.log('controls.object.position:', controls.object.position);
-    // console.log('controls.object.rotation:', controls.object.rotation);
-})
-
 
 { // Lighting
     const lightAmbient = new THREE.AmbientLight(0xdedede)
@@ -67,7 +98,6 @@ controls.addEventListener("change", event => {
     light.position.set(-18, 2.6, 22);
 
     scene.add(lightAmbient, light);
-
 }
 
 // Cube parameters
@@ -75,27 +105,6 @@ const boxWidth = 1;
 const boxHeight = 1;
 const boxDepth = 1;
 const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-
-// Function to create cubes
-function makeInstance(geometry, color, x) {
-    const material = new THREE.MeshPhongMaterial({
-        color
-    });
-
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    cube.position.x = x;
-
-    return cube;
-}
-
-// Create cubes
-const cubes = [
-    // makeInstance(geometry, 0x44aa88, 0),
-    // makeInstance(geometry, 0x8844aa, -2),
-    // makeInstance(geometry, 0xaa8844, 2),
-];
 
 // Resize render if canvas size not as displayed
 function resizeRendererToDisplaySize(renderer) {
@@ -119,13 +128,13 @@ function render(time) {
         camera.updateProjectionMatrix();
     }
 
-    cubes.forEach((cube, i) => {
-        //const speed = .1 + i * .1;
-        const speed = 0.1
-        const rot = time * speed;
-        cube.rotation.x = rot;
-        cube.rotation.y = rot;
-    });
+    // cubes.forEach((cube, i) => {
+    //     //const speed = .1 + i * .1;
+    //     const speed = 0.1
+    //     const rot = time * speed;
+    //     cube.rotation.x = rot;
+    //     cube.rotation.y = rot;
+    // });
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);
@@ -166,7 +175,6 @@ $('#btn-checkCam').on('click', function () {
 })
 
 function animate(time) {
-    // console.log('animate function')
     renderer.render(scene, camera)
     TWEEN.update(time)
     requestAnimationFrame(animate)
@@ -175,12 +183,6 @@ function animate(time) {
 }
 
 function position_default(camera) {
-    // gsap.to(camera.rotation, {
-    //     duration: 2,
-    //     x: -0.1,
-    //     y: -0.7,
-    //     z: -0.1,
-    // });
     gsap.to(camera.position, {
         duration: 2,
         x: -1.8,

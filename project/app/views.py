@@ -6,8 +6,8 @@ import math
 import json
 
 
-def model(request):
-    return render(request, 'app/10-model.html')
+def motor(request):
+    return render(request, 'app/10-motor.html')
 
 
 import random
